@@ -1,0 +1,20 @@
+# Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+**Plataforma:** PortSwigger  
+**Categoría:** SQL Injection  
+**Nivel:** Apprentice  
+**Fecha:** 2026-06-16
+
+## Vulnerabilidad
+La app filtra productos por categoría pasando el valor de la URL directo a una query SQL sin sanitizar. 
+Cualquier entrada del usuario se ejecuta como SQL real.
+
+## Qué hice
+Confirmé la vulnerabilidad agregando una comilla simple al parámetro category, lo que generó un error 500. 
+Luego inyecté ' OR 1=1-- para que la condición siempre fuera verdadera y comentar el filtro AND released = 1, exponiendo productos ocultos.
+
+## Por qué funcionó
+La app no usa prepared statements ni valida la entrada. 
+El OR 1=1 hace que la query devuelva todas las filas, y -- comenta todo lo que sigue, eliminando restricciones adicionales.
+
+## Referencia
+OWASP A03:2021 – Injection
