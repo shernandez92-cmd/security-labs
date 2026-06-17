@@ -1,0 +1,20 @@
+# Lab: SQL injection bypass de login
+**Plataforma:** PortSwigger  
+**Categoría:** SQL Injection  
+**Nivel:** Apprentice  
+**Fecha:** 2026-06-16
+
+## Vulnerabilidad
+El formulario de login construye una query SQL con el username y password sin sanitizar. 
+Un atacante puede manipular la query directamente desde los campos del formulario.
+
+## Qué hice
+Ingresé administrator'-- en el campo de usuario y cualquier valor en la contraseña. 
+Eso cerró la comilla del username y comentó la validación de contraseña.
+
+## Por qué funcionó
+La query quedó como WHERE username = 'administrator'--' AND password = 'x'. 
+Todo lo que sigue al -- fue ignorado, así que el servidor autenticó al usuario sin verificar la contraseña.
+
+## Referencia
+OWASP A03:2021 – Injection
